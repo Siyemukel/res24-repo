@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Residence24 - Student Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e3f2fd;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #003c8f;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li {
+            margin-left: 2rem;
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #82b1ff;
+        }
+
+        .form-container {
+            width: 60%;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #003c8f;
+            font-family: 'Cardo', serif;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #82b1ff;
+            box-shadow: 0 0 8px #82b1ff;
+        }
+
+        .form-group input:hover, .form-group select:hover {
+            border-color: #1e88e5;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #003c8f;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #1e88e5;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #003c8f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Residence24</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="form-container">
+        <h2>Student Details</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="student_number">Student Number</label>
+                <input type="text" id="student_number" name="student_number" value="{{ form.student_number.value }}" readonly class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="surname">Surname</label>
+                {{ form.surname }}
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label for="cellphone">Cellphone Number</label>
+                {{ form.cellphone }}
+            </div>
+            <div class="form-group">
+                <label for="address">Physical Home Address</label>
+                {{ form.address }}
+            </div>
+            <div class="form-group">
+                <label for="area_code">Address Area Code</label>
+                {{ form.area_code }}
+            </div>
+            <div class="form-group">
+                <label for="course">Enrolled Course</label>
+                {{ form.course }}
+            </div>
+            <div class="form-group">
+                <label for="faculty">Course Faculty</label>
+                {{ form.faculty }}
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 Residence24 | All Rights Reserved</p>
+    </footer>
+</body>
+</html>

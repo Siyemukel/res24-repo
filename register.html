@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Residence24</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Segoe+UI:wght@400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(145deg, rgba(0, 31, 91, 0.8), rgba(0, 60, 143, 0.8)), 
+                        url('your-background-image-url-here.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Cardo', serif;
+            color: #82b1ff;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            color: #fff;
+        }
+
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #e3f2fd;
+            color: #003c8f;
+            font-size: 1rem;
+        }
+
+        input::placeholder {
+            color: #003c8f;
+        }
+
+        .role-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+        }
+
+        .role {
+            text-align: center;
+        }
+
+        .role input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .role label {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #003c8f;
+            border: none;
+            border-radius: 0.5rem;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1e88e5;
+        }
+
+        .links {
+            margin-top: 1rem;
+        }
+
+        .links a {
+            color: #82b1ff;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h1>Create Account</h1>
+
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %} 
+            <!-- Role selection -->
+            <h2>Select Your Role</h2>
+            <div class="role-container">
+                <div class="role">
+                    <input type="radio" name="role" value="admin" id="admin" required>
+                    <label for="admin">Admin</label>
+                </div>
+                <div class="role">
+                    <input type="radio" name="role" value="student" id="student" required>
+                    <label for="student">Student</label>
+                </div>
+            </div>
+
+            <!-- Student Number -->
+            <label for="student_number">Student Number (for students only)</label>
+            <input type="text" id="student_number" name="student_number" placeholder="Enter student number">
+
+            <!-- First Name -->
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" required>
+
+            <!-- Surname -->
+            <label for="surname">Surname</label>
+            <input type="text" id="surname" name="surname" placeholder="Enter your surname" required>
+
+            <!-- Email -->
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <!-- Password -->
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <!-- Confirm Password -->
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+
+            <button type="submit" class="btn">Create Account</button>
+        </form>
+
+        <div class="links">
+            <a href="/login">Already have an account? Login</a><br>
+        </div>
+    </div>
+
+</body>
+</html>

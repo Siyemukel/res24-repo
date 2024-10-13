@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Select Residences</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e3f2fd; /* Lighter blue background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #003c8f; /* Metallic blue */
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: #003c8f; /* Metallic blue */
+        }
+
+        .faculty-selection {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .residence-checkboxes {
+            margin-bottom: 1rem;
+        }
+
+        .residence-checkboxes label {
+            display: block;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #82b1ff; /* Button color */
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1e88e5; /* Hover effect */
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Residence24 Admin</div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Select Residences for Each Faculty 2024</h1>
+
+        <form method="POST" action="{% url 'available_residences' %}">
+            {% csrf_token %}
+            <!-- Faculty 1 -->
+            <div class="faculty-selection">
+                <label for="accounting">Accounting and Informatics</label>
+                <div class="residence-checkboxes" id="accounting">
+                    <!-- Residences will be populated here -->
+                </div>
+            </div>
+
+            <!-- Faculty 2 -->
+            <div class="faculty-selection">
+                <label for="health">Health Sciences</label>
+                <div class="residence-checkboxes" id="health">
+                </div>
+            </div>
+
+            <!-- Faculty 3 -->
+            <div class="faculty-selection">
+                <label for="arts">Arts and Design</label>
+                <div class="residence-checkboxes" id="arts">
+                </div>
+            </div>
+
+            <!-- Faculty 4 -->
+            <div class="faculty-selection">
+                <label for="engineering">Engineering and the Built Environment</label>
+                <div class="residence-checkboxes" id="engineering">
+                </div>
+            </div>
+
+            <!-- Faculty 5 -->
+            <div class="faculty-selection">
+                <label for="applied">Applied Sciences</label>
+                <div class="residence-checkboxes" id="applied">
+                </div>
+            </div>
+
+            <!-- Faculty 6 -->
+            <div class="faculty-selection">
+                <label for="management">Management Sciences</label>
+                <div class="residence-checkboxes" id="management">
+                </div>
+            </div>
+
+            <!-- Faculty Other -->
+            <div class="faculty-selection">
+                <label for="other">Other</label>
+                <div class="residence-checkboxes" id="other">
+                </div>
+            </div>
+
+            <!-- Next Button -->
+            <div class="btn-container">
+                <input type="submit" class="btn" value="Save Selections">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const residences = [
+            "West Park Residence", "Sunshine Court", "Green Valley Lodge", "Ocean View Apartments",
+            "Skyline Towers", "Maple Creek", "Hilltop Manor", "Riverbend Village", 
+            "Harbour Haven", "Pine Grove", "Silver Sands", "Lakeside Homes", "Mountain Crest", "Forest View"
+        ];
+
+        const faculties = ['accounting', 'health', 'arts', 'engineering', 'applied', 'management', 'other'];
+
+        function populateCheckboxes() {
+            faculties.forEach(faculty => {
+                const container = document.getElementById(faculty);
+                residences.forEach(residence => {
+                    const label = document.createElement('label');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = residence;
+                    checkbox.name = `${faculty}[]`; // Allow multiple selections
+                    checkbox.classList.add('residence-checkbox');
+
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(residence));
+                    container.appendChild(label);
+                });
+            });
+        }
+
+        function updateSelections() {
+            let selectedResidences = new Set();
+
+            faculties.forEach(faculty => {
+                const checkboxes = document.querySelectorAll(`#${faculty} .residence-checkbox`);
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        selectedResidences.add(checkbox.value);
+                    }
+                });
+            });
+
+            faculties.forEach(faculty => {
+                const checkboxes = document.querySelectorAll(`#${faculty} .residence-checkbox`);
+                checkboxes.forEach(checkbox => {
+                    if (selectedResidences.has(checkbox.value) && !checkbox.checked) {
+                        checkbox.parentElement.style.color = 'red'; // Mark selected residences in red
+                        checkbox.disabled = true; // Disable other checkboxes with the same value
+                    } else {
+                        checkbox.parentElement.style.color = 'black'; // Reset
+                        checkbox.disabled = false;
+                    }
+                });
+            });
+        }
+
+        // Populate checkboxes
+        populateCheckboxes();
+
+        // Add change event listeners to checkboxes
+        faculties.forEach(faculty => {
+            const checkboxes = document.querySelectorAll(`#${faculty} .residence-checkbox`);
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateSelections);
+            });
+        });
+    </script>
+</body>
+</html>

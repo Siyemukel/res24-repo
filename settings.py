@@ -124,14 +124,16 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',  # Default backend
+    'ourapp.backends.StudentBackend',  # Custom backend for Student
+    'ourapp.backends.AdminBackend',    # Custom backend for Admin
+    'django.contrib.auth.backends.ModelBackend',  # Default backend (optional)
 ]
 
-LOGIN_URL = '/login/'  # Redirect to the login page if not authenticated
+LOGIN_URL = '/home/'  # Redirect to the login page if not authenticated
 
-LOGIN_REDIRECT_URL = '/'  # Redirect to homepage after login
+LOGIN_REDIRECT_URL = '/student_dashboard/'  # Redirect to homepage after login
 
-LOGOUT_REDIRECT_URL = '/login/'  # Redirect to login page after logout
+LOGOUT_REDIRECT_URL = 'home'  # Redirect to login page after logout
 
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
 SESSION_SAVE_EVERY_REQUEST = True  # Save session on every request
@@ -139,4 +141,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Don't expire session when the browser 
 
 AUTH_USER_MODEL = 'ourapp.Student'
 
-AUTH_ADMIN_MODEL = 'ourapp.Admin'
+

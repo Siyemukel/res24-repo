@@ -117,16 +117,49 @@ class StudentDetails(models.Model):
     address = models.CharField(max_length=255)
     area_code = models.CharField(max_length=10)
     course = models.CharField(max_length=255)
+    
     faculty = models.CharField(
         max_length=50,
         choices=[
-            ('Engineering', 'Engineering'),
+            ('Engineering and the Built Environment', 'Engineering and the Built Environment'),
             ('Health Sciences', 'Health Sciences'),
-            ('Humanities', 'Humanities'),
+            ('Arts and Design', 'Arts and Design'),
+            ('Applied Sciences', 'Applied Sciences'),
+            ('Accounting and Informatics', 'Accounting and Informatics'),
+            ('Management Sciences', 'Management Sciences'),
             ('Law', 'Law'),
+            ('Humanities', 'Humanities'),
             ('Business', 'Business'),
+            ('Other', 'Other'),
         ],
     )
 
     def __str__(self):
         return f"{self.name} {self.surname} ({self.student.student_number})"
+    
+
+class Residence(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class FacultyResidence(models.Model):
+    faculty = models.CharField(max_length=50, choices=[
+        ('Accounting and Informatics', 'Accounting and Informatics'),
+        ('Health Sciences', 'Health Sciences'),
+        ('Arts and Design', 'Arts and Design'),
+        ('Engineering and the Built Environment', 'Engineering and the Built Environment'),
+        ('Applied Sciences', 'Applied Sciences'),
+        ('Management Sciences', 'Management Sciences'),
+        ('Other', 'Other'),
+    ])
+    residence = models.ForeignKey(Residence, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('faculty', 'residence')
+
+    def __str__(self):
+        return f"{self.faculty} - {self.residence.name}"
