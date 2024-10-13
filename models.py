@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser, Group, Permission
 from django.core.validators import RegexValidator
+from django.conf import settings
 
 # Custom Manager for Student
 class StudentManager(BaseUserManager):
@@ -49,6 +50,10 @@ class Student(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.student_number
+    
+    
+    def check_password(self, raw_password):
+        return super().check_password(raw_password)
 
 # Custom Manager for Admin
 class AdminManager(BaseUserManager):
@@ -93,3 +98,35 @@ class Admin(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.username
+    
+    def check_password(self, raw_password):
+        return super().check_password(raw_password)
+    
+
+class StudentDetails(models.Model):
+    # Link to the Student model via a one-to-one relationship
+    student = models.OneToOneField(
+        settings.AUTH_USER_MODEL,  # This refers to the custom 'Student' model
+        on_delete=models.CASCADE,  # When a student is deleted, delete the details too
+        primary_key=True,
+    )
+    name = models.CharField(max_length=255)
+    surname = models.CharField(max_length=255)
+    email = models.EmailField()
+    cellphone = models.CharField(max_length=15)
+    address = models.CharField(max_length=255)
+    area_code = models.CharField(max_length=10)
+    course = models.CharField(max_length=255)
+    faculty = models.CharField(
+        max_length=50,
+        choices=[
+            ('Engineering', 'Engineering'),
+            ('Health Sciences', 'Health Sciences'),
+            ('Humanities', 'Humanities'),
+            ('Law', 'Law'),
+            ('Business', 'Business'),
+        ],
+    )
+
+    def __str__(self):
+        return f"{self.name} {self.surname} ({self.student.student_number})"

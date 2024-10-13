@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-image: url('https://static.wixstatic.com/media/872bfe_62709d38b2f447ec9dff612aea3ee8c7~mv2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            backdrop-filter: blur(5px); /* To make the content readable over the image */
+        }
+
+        .dashboard-container {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for better readability */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 80%; /* Wide for a dashboard layout */
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #003c8f; /* Metallic blue */
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header .welcome {
+            font-size: 1.5rem;
+            color: #003c8f;
+        }
+
+        .dashboard-header .logout-button {
+            background-color: #b71c1c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .dashboard-header .logout-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .dashboard-content {
+            display: flex;
+            flex-wrap: wrap; /* Allows content to wrap */
+            justify-content: center; /* Centers content */
+            gap: 2rem; /* Space between sections */
+        }
+
+        .dashboard-section {
+            background-color: #f1f8ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 100%; /* Full width on smaller screens */
+            max-width: 500px; /* Limit width */
+        }
+
+        .dashboard-section h2 {
+            margin-bottom: 1rem;
+            color: #003c8f;
+            font-size: 1.2rem;
+        }
+
+        .dashboard-section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .dashboard-section ul li {
+            background-color: #e3f2fd;
+            margin-bottom: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            color: #333;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .dashboard-section ul li:hover {
+            background-color: #cde1f9;
+        }
+
+        .dashboard-section ul li a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dashboard-section ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <div class="welcome">Welcome, {{ student_number }}</div>
+            <!-- Logout Form -->
+            <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    
+        <h1>Student Dashboard</h1>
+    
+        <div class="dashboard-content">
+            <div class="dashboard-section">
+                <h2>What would you like to do?</h2>
+                <ul>
+                    <li><a href="{% url 'student_details' %}">Update Student Details</a></li>
+                    <li><a href="#">Apply for Residence</a></li>
+                    <li><a href="#">Apply for an Appeal</a></li>
+                    <li><a href="#">View Allocated Residences</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

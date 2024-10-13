@@ -1,26 +1,19 @@
-"""
-URL configuration for ourproject project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path, include
-from django.shortcuts import redirect
+from django.urls import path
+from . import views
+from django.contrib.auth import views as auth_views
+from .views import custom_logout
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('Residence24/', include('ourapp.urls')),
-    path('', lambda request: redirect('home')),
+    path('student_register/', views.student_register, name='student_register'),
+    path('home/', views.home, name='home'),
+    path('student_login/', views.student_login, name='student_login'),
+    path('admin_register/', views.admin_register, name='admin_register'),
+    path('admin_login/', views.admin_login, name='admin_login'),
+    path('student_dashboard/', views.student_dashboard, name='student_dashboard'),
+    path('student_details/', views.student_details, name='student_details'),
+    path('success/', views.success, name='success'),
+    path('logout/', custom_logout, name='logout'), 
 ]
+
+
