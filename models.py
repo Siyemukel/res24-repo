@@ -119,20 +119,21 @@ class StudentDetails(models.Model):
     course = models.CharField(max_length=255)
     
     faculty = models.CharField(
-        max_length=50,
-        choices=[
-            ('Engineering and the Built Environment', 'Engineering and the Built Environment'),
-            ('Health Sciences', 'Health Sciences'),
-            ('Arts and Design', 'Arts and Design'),
-            ('Applied Sciences', 'Applied Sciences'),
-            ('Accounting and Informatics', 'Accounting and Informatics'),
-            ('Management Sciences', 'Management Sciences'),
-            ('Law', 'Law'),
-            ('Humanities', 'Humanities'),
-            ('Business', 'Business'),
-            ('Other', 'Other'),
-        ],
-    )
+    max_length=50,
+    choices=[
+        ('Engineering and the Built Environment', 'Engineering and the Built Environment'),
+        ('Health Sciences', 'Health Sciences'),
+        ('Arts and Design', 'Arts and Design'),
+        ('Applied Sciences', 'Applied Sciences'),
+        ('Accounting and Informatics', 'Accounting and Informatics'),
+        ('Management Sciences', 'Management Sciences'),
+        ('Law', 'Law'),
+        ('Humanities', 'Humanities'),
+        ('Business', 'Business'),
+        ('Other', 'Other'),
+    ],
+)
+
 
     def __str__(self):
         return f"{self.name} {self.surname} ({self.student.student_number})"
@@ -163,3 +164,18 @@ class FacultyResidence(models.Model):
 
     def __str__(self):
         return f"{self.faculty} - {self.residence.name}"
+    
+
+from django.db import models
+
+class StudentDetails(models.Model):
+    FACULTY_CHOICES = [
+        ('accounting', 'Accounting and Informatics'),
+        ('health', 'Health Sciences'),
+        ('arts', 'Arts and Design'),
+        ('engineering', 'Engineering and the Built Environment'),
+        ('applied', 'Applied Sciences'),
+        ('management', 'Management Sciences'),
+        ('other', 'Other')
+    ]
+    

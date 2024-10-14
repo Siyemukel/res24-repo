@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import custom_logout
+from .views import custom_logout, available_residences, select_residences
 
 
 urlpatterns = [
@@ -14,6 +14,8 @@ urlpatterns = [
     path('student_details/', views.student_details, name='student_details'),
     path('success/', views.success, name='success'),
     path('logout/', custom_logout, name='logout'), 
+    path('admin_dashboard/', views.admin_dashboard , name='admin_dashboard'),
+    path('available-residences/', available_residences, name='available_residences'),
+    path('select_residences/', select_residences, name='select_residences'),
+
 ]
-
-
